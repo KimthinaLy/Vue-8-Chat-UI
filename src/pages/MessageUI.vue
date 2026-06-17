@@ -5,7 +5,8 @@ import InputBar from '@/components/InputBar.vue';
 
 </script>
 <template>
-    <div style="display: flex; flex-direction: column;">
+    <div
+        style="display: flex; flex-direction: column; width: 80%; max-width: 500px; min-width: 300px;  background-color: azure;">
         <ChatUIHeader />
         <MessageArea />
         <InputBar />

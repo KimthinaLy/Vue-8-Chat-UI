@@ -61,4 +61,6 @@ export const useChatStore = defineStore('chatStore', () => {
       status: 'sending',
     },
   ])
+
+  return { messageList }
 })
