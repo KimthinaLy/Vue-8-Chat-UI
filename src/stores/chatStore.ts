@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import type { Message } from '@/types/message'
 
 export const useChatStore = defineStore('chatStore', () => {
+  let id: number = 8
+  const isTyping = ref(false)
   const messageList = ref<Message[]>([
     {
       id: 1,
@@ -62,5 +64,31 @@ export const useChatStore = defineStore('chatStore', () => {
     },
   ])
 
-  return { messageList }
+  function sendMessage(content: string) {
+    const msgId = ++id
+    messageList.value.push({
+      id: msgId,
+      sender: 'user',
+      content: content,
+      timestamp: new Date().toLocaleTimeString(),
+      status: 'sending',
+    })
+
+    isTyping.value = true
+    setTimeout(() => {
+      messageList.value.push({
+        id: ++id,
+        sender: 'bot',
+        content: 'I got your message!',
+        timestamp: new Date().toLocaleTimeString(),
+        status: 'sent',
+      })
+      isTyping.value = false
+
+      const userMsg = messageList.value.find((msg) => msg.id === msgId)
+      if (userMsg) userMsg.status = 'sent'
+    }, 2000)
+  }
+
+  return { messageList, sendMessage, isTyping }
 })
