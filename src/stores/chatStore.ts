@@ -76,17 +76,19 @@ export const useChatStore = defineStore('chatStore', () => {
 
     isTyping.value = true
     setTimeout(() => {
-      messageList.value.push({
-        id: ++id,
-        sender: 'bot',
-        content: 'I got your message!',
-        timestamp: new Date().toLocaleTimeString(),
-        status: 'sent',
-      })
       isTyping.value = false
 
-      const userMsg = messageList.value.find((msg) => msg.id === msgId)
-      if (userMsg) userMsg.status = 'sent'
+      setTimeout(() => {
+        messageList.value.push({
+          id: ++id,
+          sender: 'bot',
+          content: 'I got your message!',
+          timestamp: new Date().toLocaleTimeString(),
+          status: 'sent',
+        })
+        const userMsg = messageList.value.find((msg) => msg.id === msgId)
+        if (userMsg) userMsg.status = 'sent'
+      }, 500)
     }, 2000)
   }
 

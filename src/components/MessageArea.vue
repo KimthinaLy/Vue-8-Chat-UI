@@ -21,6 +21,9 @@ watch(chatStore.messageList, async () => {
         <TransitionGroup tag="div" style="padding: 1rem; display: flex; flex-direction: column;">
             <MessageBubble v-for="msg in chatStore.messageList" :key="msg.id" :message="msg" />
         </TransitionGroup>
+        <Transition name="fade">
+            <p style="font-size: 16px; padding: 1rem; color: gray; margin: 0;" v-if="chatStore.isTyping">Typing...</p>
+        </Transition>
     </div>
 </template>
 <style scoped>
@@ -33,6 +36,21 @@ watch(chatStore.messageList, async () => {
 }
 
 .v-enter-to {
+    opacity: 1;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-to,
+.fade-leave-from {
     opacity: 1;
 }
 </style>
